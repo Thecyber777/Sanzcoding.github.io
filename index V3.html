@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kembali</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+.header {
+    background: #2196F3;
+    height: 150px;
+    top: 0;
+    margin-top: 0px;
+    padding: 18px;
+   border-radius: 0 0 30px 30px;
+}
+
+.box {
+    padding: 10px;
+    background-color: white;
+    border-radius: 20px;
+    margin-top: 30px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.box img {
+    width: 100px;
+    margin-top: 30px;
+}
+
+body {
+    background: #edf1fc;
+}
+
+.box h6 {
+    font-weight: 400;
+    font-size: 11px;
+}
+
+.box p {
+    font-size: 14px;
+    color: grey;
+    margin-bottom: 0;
+}
+
+.box h3 {
+    font-size: 14px;
+}
+
+.box-mini {
+    background: white;
+    padding: 10px;
+    display: flex;
+    border-radius: 5px;
+    margin-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.image img {
+    width: 30px;
+    margin-top: 5px; 
+    margin-right: 15px;
+}
+
+.text {
+    width: 100%;
+}
+
+.text p {
+    margin-bottom: 0;
+    margin-top: 0;
+    font-size: 14px;
+    color: black;
+}
+
+.text h5 {
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 0;
+}
+
+.arrow i {
+    margin-right: 10px;
+    color: black;
+    font-size: 15px;
+    margin-top: 12px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.overlay {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+@keyframes slideInFromBottom {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.modal {
+    border-radius: 20px 20px 0px 0px;
+    position: fixed;
+    bottom: 0; 
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 2rem;
+    z-index: 1000;
+    width: 100%;
+    max-width: 500px;
+    animation: slideInFromBottom 0.8s forwards; 
+}
+  #transactionHistory {
+        max-height: 55vh; 
+        overflow-y: auto; 
+    }
+  
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.tabcontent {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+}
+
+.fade-in {
+  animation-name: fadeIn;
+}
+
+.fade-out {
+  animation-name: fadeOut;
+}
+ 
+  .history-list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .history-item {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start; 
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .history-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .history-item a {
+    text-decoration: none;
+    color: #333;
+  }
+
+  .history-item a:hover {
+    color: #000;
+  }
+
+  .date {
+    color: #777;
+    font-size: 14px;
+    margin-top: 10px; 
+    text-align: right; 
+    flex: 1; 
+  }
+
+  .amount {
+    font-size: 16px;
+    text-align: right; 
+    flex: 1;
+  }
+  
+  .dashed-line {
+  width: 100%;
+  border-bottom: 2px dashed #ccc; 
+  margin: 15px 0; 
+}
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div id="myModal" class="overlay">
+        <div class="modal mb-0">
+          
+<div style="margin-top: -20px; width: 30%; " class=" mb-2 mx-auto bg-gray-200 rounded-lg p-1">
+</div>
+          <a href="https://glizzpedia.olshopku.com/scan_all">
+            <center>
+           <img src="https://cdn-icons-png.flaticon.com/128/8848/8848876.png" class="w-20 h-20 mb-2">
+              <h6 class="text-gray-500 ">Scan QR</h6>
+            </center>
+           </a>
+          <div class="dashed-line"></div>
+          <form id="transferForm" action="https://sitecoding.pans.my.id/" method="post" onsubmit="return checkBalance()">               
+            <div class="relative">
+                <input style="border-radius: 15px;" type="text" id="id_user_tambah" name="id_user_tambah" placeholder="ID Penerima" class="form-control {{hasil_scan}} bg-gray-100 w-full px-4 py-2 border focus:outline-none focus:border-gray-300 pl-10 mb-4" required>
+                <i class="absolute top-3 left-5 fas fa-user text-gray-400"></i>
+            </div>
+            <div class="relative">
+                <input type="hidden" id="id_user_kurang" name="id_user_kurang" value="{{id_user}}" class=" w-full px-4 py-2 border focus:outline-none focus:border-blue-500 mb-4" required>
+                <i class="absolute top-3 left-5 fas fa-user-secret text-gray-400"></i>
+            </div>
+            <div class="relative">
+                <input style="border-radius: 15px;" type="number" id="jumlah" name="jumlah" placeholder="Rp 10,000" class="w-full px-4 py-2 border  bg-gray-100 focus:outline-none focus:border-gray-300 pl-10 " required>
+                <i class="absolute top-3 left-5 fas fa-money-bill-alt text-gray-400"></i>
+            </div>
+            
+              <div class="dashed-line"></div>
+        <div class="main-item-text">
+            <p>Tujuan </p>
+            <h6 class="text-gray-500" id="penerima">**********</h6>
+        </div>
+        <div class="main-item-text">
+            <p>Pembayaran</p>
+            <h6 class="text-gray-500 ">Sanzpoint</h6>
+        </div>
+
+        <div class="main-item-text font-bold">
+            <p>Total Bayar</p>
+            <h6 class="text-gray-600 " id="total-bayar">Rp0</h6>
+        </div>
+              <div class="dashed-line"></div>
+            <div class="flex justify-between">
+                <button id="closeModal" type="button" class="w-1/2 mr-2 text-white font-bold py-2 px-4 mt-4" style="background:#2196F3; border-radius:20px;">Batalkan</button>
+                <input type="submit" value="Kirim" class="w-1/2 text-white font-bold py-2 px-4 mt-4" style="background:#2196F3; border-radius:20px;" id="kirimButton" onclick="return checkBalance()">
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="header">
+    <div class="box">
+        <center class="mb-2">
+            <img src="https://cdn-icons-png.flaticon.com/128/641/641342.png" id="qrCodeImg" alt="">
+            <br>
+            <h6>Bagikan QR ke teman</h6>
+        </center>
+    </div>
+
+  
+<div class="mx-auto mt-3">
+  <div style="border-radius: 20px;" class=" mx-auto  bg-white overflow-hidden shadow-md">
+    <div class="tab w-full flex">
+      <button class="tablinks w-full py-2 bg-white text-gray-500 border-b-2 border-gray-200 focus:outline-none" onclick="openTab(event, 'Tab1')">KIRIM</button>
+      <button class="tablinks w-full py-2 bg-white text-gray-500 border-l-2 border-b-2 border-gray-200 focus:outline-none" onclick="openTab(event, 'Tab2')">RIWAYAT</button>
+    </div>
+
+    <div id="Tab1" class="tabcontent p-4">
+      
+      <button id="openModal" style="background: #2196F3; color: #fff; outline: 1px solid #2196F3;" class=" mt-5 py-2 px-4 rounded-full w-full">Kirim Saldo</button>
+    </div>
+
+<div id="Tab2" class="tabcontent hidden p-4">
+  <div id="history-list" class="history-list" style="overflow-y: auto; max-height: 50vh;"></div>
+</div>
+  </div>
+</div>
+ 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+  var xmlHttpRequest = new XMLHttpRequest();  
+  xmlHttpRequest.open("GET",
+  "https://openapi.bukaolshop.net/v1/user/catatan?token=eyJhcHAiOiIxNTI2NDEiLCJhdXRoIjoiMjAyNDAzMDMiLCJzaWduIjoid29OQWFVU2x3NE5nR2pQUGVyV1JEZz09In0=&token_user={{token_user}}&id_user={{id_user}}&tipe=saldo", true);  
+  xmlHttpRequest.onreadystatechange = function () {  
+      if (this.readyState == 4 && this.status == 200) {
+          var response = JSON.parse(this.responseText);
+          displayCatatan(response.data);
+      }  
+  };  
+  xmlHttpRequest.send();
+
+  function displayCatatan(catatan) {
+      var historyList = document.getElementById("history-list");
+      catatan.forEach(function(item) {
+          var listItem = document.createElement("li");
+          listItem.classList.add("history-item");
+          var link = document.createElement("a");
+          link.href = item.link_transaksi;
+          link.textContent = item.informasi_catatan;
+          var amountSpan = document.createElement("span");
+          amountSpan.classList.add("amount");
+          amountSpan.textContent = "Rp" + Number(item.jumlah_dana).toLocaleString('id-ID');
+          var dateSpan = document.createElement("span");
+          dateSpan.classList.add("date");
+          dateSpan.textContent = item.tanggal;
+          listItem.appendChild(link);
+          listItem.appendChild(amountSpan);
+          listItem.appendChild(dateSpan);
+          historyList.appendChild(listItem);
+      });
+  }
+});
+  
+  
+        $(document).ready(function(){
+            $("#openModal").click(function(){
+                $(".overlay").fadeIn();
+            });
+            $("#closeModal").click(function(){
+                $(".overlay").fadeOut();
+            });
+        });
+  
+function generateAndSaveQRCode(url) {
+    try {
+        const qrCodeDataURL = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(user)}`;
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob'; 
+        xhr.onload = function() {
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                localStorage.setItem('qrCode', reader.result); 
+            };
+            reader.readAsDataURL(xhr.response); 
+        };
+        xhr.open('GET', qrCodeDataURL);
+        xhr.send();
+    } catch (error) {
+    }
+}
+function loadQRCode() {
+    const qrCodeDataURL = localStorage.getItem('qrCode');
+    if (qrCodeDataURL) {
+        const qrCodeImg = document.getElementById('qrCodeImg');
+        qrCodeImg.src = qrCodeDataURL;
+        qrCodeImg.style.display = 'block';
+    } else {
+    }
+}
+const user = '{{id_user}}';
+generateAndSaveQRCode(user);
+window.onload = loadQRCode;
+function checkBalance() {
+    var saldo = parseFloat("{{saldo_user}}");
+    var transferAmount = parseFloat(document.getElementById("jumlah").value);
+    var minimalTransfer = 10000; 
+    if (saldo === 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Saldo Anda 0',
+            text: 'Mohon isi saldo terlebih dahulu.'
+        });
+        return false;
+    } else if (saldo < transferAmount) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Saldo Tidak Cukup',
+            text: 'Saldo Anda tidak mencukupi untuk melakukan transfer.'
+        });
+        return false;
+    } else if (transferAmount < minimalTransfer) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Minimal Kirim Saldo',
+            text: 'Rp' + minimalTransfer + ''
+        });
+        return false;
+    } else {
+        return true;
+    }
+}
+    const inputUserTambah = document.getElementById('id_user_tambah');
+    inputUserTambah.addEventListener('input', function() {
+        if (this.value.trim() !== '') {
+            openModal();
+        }
+    });
+    function openModal() {
+        const modal = document.getElementById('myModal');
+        modal.style.display = 'block';
+    }
+
+  
+  
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    if (tabcontent[i].classList.contains("fade-in")) {
+      tabcontent[i].classList.remove("fade-in");
+      tabcontent[i].classList.add("fade-out");
+      setTimeout(function(index) {
+        tabcontent[index].style.display = "none";
+      }, 500, i); // Waktu animasi fade out
+    }
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+    
+    
+  document.getElementById(tabName).style.display = "block";
+  setTimeout(function() {
+    document.getElementById(tabName).classList.remove("fade-out");
+    document.getElementById(tabName).classList.add("fade-in");
+  }, 10); // Waktu kecil untuk menghindari masalah animasi
+  evt.currentTarget.className += " active";
+}
+  
+  
+  document.getElementById("id_user_tambah").addEventListener("input", function() {
+  var inputValue = this.value;
+  document.getElementById("penerima").innerText = inputValue;
+});
+  
+  
+document.getElementById("jumlah").addEventListener("input", function() {
+  var inputValue = this.value;
+  var formattedValue = formatNumber(inputValue);
+  document.getElementById("total-bayar").innerText = "Rp " + formattedValue;
+});
+
+function formatNumber(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+  
+</script>
+  <script src="https://cdn.jsdelivr.net/gh/danizevaro/javascript@main/style/buyer/rwt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
+  
+  
